@@ -9,4 +9,5 @@ a. Encoding RNA and ATAC network b. Reconstruction of bottleneck layer, a **Rewi
 
 In this tutorial, we will provide detail workflow of single-cell chromatin accessibility data pre-processing using **ArchR** [package](https://github.com/GreenleafLab/ArchR) to help generate relevant inputs for the downstream **scMINER2** analysis followed by detail of **scMINER2** analysis workflow and concepts related to **scMINER2** framework.
 
-![**Figure 1| scMINER2 - A causal feature learning framework to untangle cell type resolved hidden gene regulatory network (hGRN)**](./scMINER2/scMINER2.png){width=100%}
+(./scMINER2/scMINER2.png)
+Figure 1| scMINER2 - A causal feature learning framework to untangle cell type resolved hidden gene regulatory network (hGRN)
