@@ -1,5 +1,4 @@
-@article{
-doi:10.1126/science.298.5594.824,
+@Manual{milo,
 author = {R. Milo  and S. Shen-Orr  and S. Itzkovitz  and N. Kashtan  and D. Chklovskii  and U. Alon },
 title = {Network Motifs: Simple Building Blocks of Complex Networks},
 journal = {Science},
@@ -9,11 +8,9 @@ pages = {824-827},
 year = {2002},
 doi = {10.1126/science.298.5594.824},
 URL = {https://www.science.org/doi/abs/10.1126/science.298.5594.824},
-eprint = {https://www.science.org/doi/pdf/10.1126/science.298.5594.824},
-abstract = {Complex networks are studied across many fields of science. To uncover their structural design principles, we defined “network motifs,” patterns of interconnections occurring in complex networks at numbers that are significantly higher than those in randomized networks. We found such motifs in networks from biochemistry, neurobiology, ecology, and engineering. The motifs shared by ecological food webs were distinct from the motifs shared by the genetic networks of Escherichia coli and Saccharomyces cerevisiae or from those found in the World Wide Web. Similar motifs were found in networks that perform information processing, even though they describe elements as different as biomolecules within a cell and synaptic connections between neurons in Caenorhabditis elegans. Motifs may thus define universal classes of networks. This approach may uncover the basic building blocks of most networks.}}
+}
 
-@article{
-doi:10.1126/science.1065103,
+@Manual{maslov,
 author = {Sergei Maslov  and Kim Sneppen },
 title = {Specificity and Stability in Topology of Protein Networks},
 journal = {Science},
@@ -23,38 +20,39 @@ pages = {910-913},
 year = {2002},
 doi = {10.1126/science.1065103},
 URL = {https://www.science.org/doi/abs/10.1126/science.1065103},
-eprint = {https://www.science.org/doi/pdf/10.1126/science.1065103},
-abstract = {Molecular networks guide the biochemistry of a living cell on multiple levels: Its metabolic and signaling pathways are shaped by the network of interacting proteins, whose production, in turn, is controlled by the genetic regulatory network. To address topological properties of these two networks, we quantified correlations between connectivities of interacting nodes and compared them to a null model of a network, in which all links were randomly rewired. We found that for both interaction and regulatory networks, links between highly connected proteins are systematically suppressed, whereas those between a highly connected and low-connected pairs of proteins are favored. This effect decreases the likelihood of cross talk between different functional modules of the cell and increases the overall robustness of a network by localizing effects of deleterious perturbations.}}
-
-@article {Argelaguet2022.06.15.496239,
-	author = {Argelaguet, Ricard and Lohoff, Tim and Li, Jingyu Gavin and Nakhuda, Asif and Drage, Deborah and Krueger, Felix and Velten, Lars and Clark, Stephen J. and Reik, Wolf},
-	title = {Decoding gene regulation in the mouse embryo using single-cell multi-omics},
-	elocation-id = {2022.06.15.496239},
-	year = {2022},
-	doi = {10.1101/2022.06.15.496239},
-	publisher = {Cold Spring Harbor Laboratory},
-	abstract = {Following gastrulation, the three primary germ layers develop into the major organs in a process known as organogenesis. Single-cell RNA sequencing has enabled the profiling of the gene expression dynamics of these cell fate decisions, yet a comprehensive map of the interplay between transcription factors and cis-regulatory elements is lacking, as are the underlying gene regulatory networks. Here we generate a multi-omics atlas of mouse early organogenesis by simultaneously profiling gene expression and chromatin accessibility from tens of thousands of single cells. We develop a computational method to leverage the multimodal readouts to predict transcription factor binding events in cis-regulatory elements, which we then use to infer gene regulatory networks that underpin lineage commitment events. Finally, we show that these models can be used to generate in silico predictions of the effect of transcription factor perturbations. We validate this experimentally by showing that Brachyury is essential for the differentiation of neuromesodermal progenitors to somitic mesoderm fate by priming cis-regulatory elements. The data set can be interactively explored at https://www.bioinformatics.babraham.ac.uk/shiny/shiny_multiome_organogenesis/Competing Interest StatementW.R. is a consultant and shareholder of Cambridge Epigenetix. R.A., D.D., F.K., S.J.C. and W.R. are employees of Altos Labs. The remaining authors declare no competing financial interests.},
-	URL = {https://www.biorxiv.org/content/early/2022/11/15/2022.06.15.496239},
-	eprint = {https://www.biorxiv.org/content/early/2022/11/15/2022.06.15.496239.full.pdf},
-	journal = {bioRxiv}
 }
 
-@article {10.7554/eLife.43803,
-article_type = {journal},
+@Manual{insilico,
+author = {Argelaguet, Ricard and Lohoff, Tim and Li, Jingyu Gavin and Nakhuda, Asif and Drage, Deborah and Krueger, Felix and Velten, Lars and Clark, Stephen J. and Reik, Wolf},
+title = {Decoding gene regulation in the mouse embryo using single-cell multi-omics},
+journal = {bioRxiv},
+year = {2022},
+doi = {10.1101/2022.06.15.496239},
+URL = {https://www.biorxiv.org/content/early/2022/11/15/2022.06.15.496239},
+}
+
+@Manual{cnmf,
 title = {Identifying gene expression programs of cell-type identity and cellular activity with single-cell RNA-Seq},
 author = {Kotliar, Dylan and Veres, Adrian and Nagy, M Aurel and Tabrizi, Shervin and Hodis, Eran and Melton, Douglas A and Sabeti, Pardis C},
-editor = {Valencia, Alfonso and Barkai, Naama and Mereu, Elisabetta and Göttgens, Berthold},
-volume = 8,
-year = 2019,
-month = {jul},
-pub_date = {2019-07-08},
+journal = {eLife},
+volume = {8},
+year = {2019},
 pages = {e43803},
-citation = {eLife 2019;8:e43803},
 doi = {10.7554/eLife.43803},
 url = {https://doi.org/10.7554/eLife.43803},
-abstract = {Identifying gene expression programs underlying both cell-type identity and cellular activities (e.g. life-cycle processes, responses to environmental cues) is crucial for understanding the organization of cells and tissues. Although single-cell RNA-Seq (scRNA-Seq) can quantify transcripts in individual cells, each cell’s expression profile may be a mixture of both types of programs, making them difficult to disentangle. Here, we benchmark and enhance the use of matrix factorization to solve this problem. We show with simulations that a method we call consensus non-negative matrix factorization (cNMF) accurately infers identity and activity programs, including their relative contributions in each cell. To illustrate the insights this approach enables, we apply it to published brain organoid and visual cortex scRNA-Seq datasets; cNMF refines cell types and identifies both expected (e.g. cell cycle and hypoxia) and novel activity programs, including programs that may underlie a neurosecretory phenotype and synaptogenesis.},
-keywords = {gene expression programs, single-cell Rna-Seq, matrix factorization, visual cortex, brain organoids, synaptogenesis},
-journal = {eLife},
-issn = {2050-084X},
-publisher = {eLife Sciences Publications, Ltd},
 }
+
+@Manual{sjaracne,
+author = {Khatamian, Alireza and Paull, Evan O and Califano, Andrea and Yu, Jiyang},
+title = {SJARACNe: a scalable software tool for gene network reverse engineering from big data},
+journal = {Bioinformatics},
+volume = {35},
+number = {12},
+pages = {2165-2166},
+year = {2018},
+doi = {10.1093/bioinformatics/bty907},
+url = {https://doi.org/10.1093/bioinformatics/bty907},
+}
+
+
+
