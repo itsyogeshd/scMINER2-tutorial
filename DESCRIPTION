@@ -1,0 +1,6 @@
+Package: scMINER2
+Type: Book
+Title: Welcome to scMINER2 tutorial.
+Version: 0.0.1
+Imports: bookdown
+Remotes: rstudio/bookdown
