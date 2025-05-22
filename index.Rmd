@@ -1,15 +1,16 @@
 --- 
-title: "scMINER2"
-author: "Yogesh Dhungana"
+title: scMINER2
+author: Yogesh Dhungana
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib]
 biblio-style: apalike
+cover-image: scMINER2/scMINER2.png
 link-citations: yes
-github-repo: rstudio/bookdown-demo
-description: "A causal feature learning framework for single-cell multiomics"
+github-repo: https://github.com/itsyogeshd/scMINER2-tutorial
+description: A causal feature learning framework for single-cell multiomics
 ---
 
 # Welcome

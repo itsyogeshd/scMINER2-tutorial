@@ -1,7 +1,8 @@
-# Installation {#installation}
+# Get Started {#installation}
 
-**scMINER2 INSTALLATION INSTRUCTIONS:**
+This section we will walk you through the installation process of **scMINER2** and its relevant dependencies.
 
+## Install scMINER2 R package
 The **scMINER2** package can be installed from [Github](https://github.com/jyyulab/scMINER2):
 
 ```{r eval=FALSE}
@@ -9,9 +10,8 @@ install.packages("devtools")
 devtools::install_github("jyyulab/scMINER2", dependencies = T)
 ```
 
-Other dependencies for **scMINER2** can be installed following the instructions below:
-
-1. Create a conda environment for homer using prebuild environment file provided with **scMINER2** R package. 
+## Install Homer
+Create a conda environment for homer using prebuild environment file provided with **scMINER2** R package. 
 
 ```{r eval=FALSE}
 # In R, run to get path of homer.yml file.
@@ -27,8 +27,9 @@ conda activate homer_env
 perl /home/ydhungan/.conda/envs/homer_env/share/homer/.//configureHomer.pl -install hg38
 perl /home/ydhungan/.conda/envs/homer_env/share/homer/.//configureHomer.pl -install mm10
 ```
-\
-2. Install bwtool system-wide following the [bwtool](https://github.com/CRG-Barcelona/bwtool/wiki) tutorial. 
+
+## Install Bwtools
+Install bwtool system-wide following the [bwtool](https://github.com/CRG-Barcelona/bwtool/wiki) tutorial. 
 For local installation of **bwtool** follow the steps below:
 
 ```{bash, eval=FALSE, engine.opts = list(highlight = TRUE)}
@@ -51,8 +52,9 @@ make
 # copy or move the binary to PATH or to a directory under PATH
 sudo cp bwtool /usr/local/bin 
 ```
-\
-3. Create a conda environment for cNMF using prebuild environment file provided with **scMINER2** R package. 
+
+## Install consensus NMF
+Create a conda environment for cNMF using prebuild environment file provided with **scMINER2** R package. 
 ```{r eval=FALSE}
 # In R, run to get path of cnmf.yml file
 system.file("extdata", "cnmf.yml", package = "scMINER2")
@@ -62,5 +64,3 @@ system.file("extdata", "cnmf.yml", package = "scMINER2")
 # Create a conda environment for cNMF
 conda env create --name cnmf_env --file=cnmf.yml
 ```
-
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].

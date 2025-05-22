@@ -1,2 +1,8 @@
 # Introduction {#introduction}
 
+In this section we will introduce some key concepts and features of **scMINER2**.
+
+## Motivation
+The development of scMINER2 is motivated by the concept of learning *causal features* through integration of gene expression and chromatin accessibility data using network-based approach. Single-cell technology, such as scRNA and scATAC has enabled data acquisition of multi-modal cellular states. However, due to inherent stochastic and sparse nature of such data sets any causal interpretation of features identified through analysis of such data remains a key challenge. Here, borrowing the concept of *Reinforcement Learning*, we generate a consensus network from scRNA and scATAC data, followed by searching network motifs (e.g. feed-forward loops) as *attention* mechanism and reconstruct the **Rewiring Matrix**. Decomposition of this **Rewiring Matrix** allows the user to infer locally enriched sub graphs (TF-TF interactions) from the global reinforced network, which might explain the input cell states as well as capture the underlying cellular differentiation trajectory. 
+
+## 
