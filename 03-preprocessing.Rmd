@@ -1,2 +1,98 @@
 # Preprocessing {#preprocessing}
 
+In this section we will provide complete workflow to preprocess scATAC data using the **ArchR** [package](https://github.com/GreenleafLab/ArchR) package and generate all the relevant inputs for downstream **scMINER2** analysis.
+
+## Prepare single-cell ATAC preprocessing
+Set the working directory
+```{r include=T, eval=F}
+setwd("./scMINER2.dir")
+```
+
+Install the ```R``` libraries required for the pre-processing step. If this step encounters errors, it is recommended that the user ensure proper installation of all the required R packages listed in ```scminer2.commons.txt``` below before moving forward with the preprocessing:
+
+```{r include=T, eval=T}
+cat(readLines(system.file("extdata", "scminer2.commons.txt", package = "scMINER2")), sep = "\n")
+```
+
+The Code below will locate and ```source``` all the single-cell ATAC pre-processing wrapper scripts for ```ArchR``` package and ```R``` libraries required for the pre-processing step.
+
+```{r include=T, eval=F}
+source(system.file("extdata", "scminer2.commons.txt", package = "scMINER2"))
+atac_utilities <- system.file("extdata", "preprocess.atac.input.txt", package = "scMINER2")
+setDTthreads(threads = 1) # avoid aborting R session
+purrr::walk(atac_utilities, source)
+```
+
+## Define file paths
+Define the paths and file names for the ```scRNA``` data directories and ```scATAC``` ```fragments.tsv.gz``` files.
+
+```{r include=T, eval=F}
+snRNA_seurat_obj<-"scMINER2.dir/Data/scMINER2_scRNA_seuratObj.Rdata"
+atacinputFiles <- c("scMINER2.dir/Data/atacFragments/s1_atac_fragments.tsv.gz",
+                    "scMINER2.dir/Data/atacFragments/s2_atac_fragments.tsv.gz")
+atacinputFiles.names <- c("D1_Stim5_EphA2Her2", "D2_Stim5_EphA2Her2")
+```
+
+## Generate arrow files
+This step will generate ```Arrow``` files from provided ATAC ```fragments.tsv.gz``` files. This step is time consuming and can take more than an hour if the total cell number exceeds \(30,000\).
+```{r include=T, eval=F}
+generate_Arrow_files(atac.fragments = atacinputFiles, sampleNames = atacinputFiles.names,
+                     genome = "hg38", projectname="scMINER2.project", nthreads = 4)
+```
+
+## Create cell metadata
+This step will create cell metadata combining single-cell RNA and ATAC component of the single-cell multi-ome profiles. Only those cells that have both RNA and ATAC barcodes will be kept and the ```scRNA``` object defined in the section [Define file paths], e.g. ```snRNA_seurat_obj```  will be updated.
+```{r include=T, eval=F}
+generate_project_metadata(projectname = "scMINER2.project", genome="hg38", cell.overlap.cutoff=0.9,
+                          snRNA.obj=snRNA_seurat_obj, nthreads = 4)
+```
+
+## Generate standard scATAC QC plots
+Plot single-cell ATAC read fragment size distribution, TSS enrichment, and blacklist peak ratio. This will create filtered ```ArchR``` objects for downstream peak calls. 
+
+```{r include=T, eval=F}
+# Generate the qc metrices
+generate_ATAC_qc_metrics(samplegroup="sampleNames", cellgroup="celltype", chromosome=paste0("chr",1:3),
+                         projectname="scMINER2.project", genome="hg38", outdir="QC", nthreads = 4)
+# Plot the QC results
+plot_qc_histograms(projectname="scMINER2.project", samplegroup="sampleNames", cellgroup="celltype",
+                   min.tss=4, max.tss=30, min.frag=1000, max.frag=250000, max.blacklist.ratio=0.05, outdir="QC")
+```
+
+## ATAC peak calling
+Peak calling in the pre-processing step is performed using ```macs2```. A local installation of ```macs2``` via ```conda``` is recommended for the users. Users can install ```macs2``` locally using the following steps: 
+```bash
+# Create conda environment for macs2 
+conda env create --name ngstools
+conda activate ngstools
+conda install bioconda::macs2
+```
+Path to ```macs2``` can be recovered from the terminal using ```which(macs2)``` 
+
+```{r include=T, eval=F}
+callpeaks_macs2(projectname="scMINER2.project",groupby="celltype", macs2path="/opt/miniconda3/envs/ngstools/bin/macs2",
+                genome="hg38", minCells=100, maxCells=5000, cutoff=0.05, nthreads = 2)
+```
+
+## Generate pseudo-bulk
+This step will create pseudo-bulk peak and RNA ```SummarizedExperiment``` objects at ```celltype``` and ```metacell``` resolution. It is recommended for the users to provide both ```celltype``` and ```metacell``` labels in the metadata of the single-cell RNA object defined in the section [Define file paths] e.g. ```snRNA_seurat_obj```.
+
+```{r include=T, eval=F}
+# Pseudo-bulk grouped by cell type 
+generate_pseudobulks(projectname = "scMINER2.project", groupby="celltype", excludeChr = c("chrM", "chrY"), qcdir="QC", nthreads = 4)
+
+# Pseudo-bulk grouped by meta cell
+generate_pseudobulks(projectname = "scMINER2.project", groupby="metacell", excludeChr = c("chrM", "chrY"), qcdir="QC", nthreads = 4)
+```
+
+## QC of ATAC peaks
+This step will perform QC and filtering of the ATAC peaks. It will generate pie chart of peak type (e.g. Promoter, Exonic, Intronic, or Distal) distributions, box plot of average chromatin accessibility across peak types, and mean vs variance plot at single-cell or pseudo bulk resolution. It will also report the table with number of peaks detected per group. 
+```{r include=TRUE, eval=F}
+filter_Peaks(projectname = "scMINER2.project", groupby="celltype", qcdir="QC", genome = "hg38", nthreads = 4)
+```
+
+## Perform motif annotation
+Final step of the single-cell ATAC data pre-processing includes annotation of the peaks for transcription factors (TFs) binding motifs. Currently supported motif database includes ```JASPER2020``` and ```cisbp``` from ```ArchR``` package. This function supports annotation of both ```human:hg38``` and ```mouse:mm10``` TF motifs.
+```{r include=TRUE, eval=F}
+prep_motif_annotation(projectname="scMINER2.project", groupby = "celltype", motifdb = "JASPER", genome = "hg38", nsample=50, seed=37, nthreads = 4)
+```
